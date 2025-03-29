@@ -5,7 +5,7 @@ const app = express();
 app.use(express.json());
 
 // In-memory variable to store player states
-let gameState = { players: [20137581,283086588,310475181,1246317443,83665149,3888076128,3177450285] };
+let gameState = { players: [20137581,283086588,310475181,1246317443,83665149,3888076128,3177450285,104594292] };
 
 // Route for POST requests to check if UID exists
 app.post('/', (req, res) => {
