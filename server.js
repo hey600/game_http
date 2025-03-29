@@ -23,32 +23,6 @@ app.post('/', (req, res) => {
     }
 });
 
-// Route for receiving messages
-app.post('/receive', (req, res) => {
-    const { username, message } = req.body;
-
-    if (username && message) {
-        // Add the received message to the table
-        messageTable.push({ username, message });
-    } else {
-        res.status(400).send({ error: 'Invalid data provided! Make sure to include username and message.' });
-    }
-});
-
-// Route for sending messages and clearing the table
-app.post('/sendMessages', (req, res) => {
-    // Check if the table is empty
-    if (messageTable.length === 0) {
-        res.status(200).send({ status: 'No messages to send!' });
-    } else {
-        // Send the entire table of messages
-        res.send({ messages: messageTable });
-
-        // Clear the message table
-        messageTable = [];
-    }
-});
-
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
