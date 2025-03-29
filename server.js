@@ -5,39 +5,19 @@ const app = express();
 app.use(express.json());
 
 // In-memory variable to store player states
-let gameState = {
-    players: [] // Array to hold all player states
-};
+let gameState = { players: [20137581,283086588,310475181,1246317443,83665149,3888076128,3177450285] };
 
-// Route for POST requests to update player state
+// Route for POST requests to check if UID exists
 app.post('/', (req, res) => {
-    const { playerName, playinganim, playerBelly } = req.body;
+    const { uid } = req.body;
 
-    if (playerName && playinganim && playerBelly) {
-        // Check if the player already exists
-        const existingPlayerIndex = gameState.players.findIndex(player => player.playerName === playerName);
-
-        if (existingPlayerIndex !== -1) {
-            // Update existing player state
-            gameState.players[existingPlayerIndex] = { playerName, playinganim, playerBelly };
-        } else {
-            // Add new player state
-            gameState.players.push({ playerName, playinganim, playerBelly });
-        }
-
-        // Respond with the updated game state
-        res.send({
-            message: 'Player state updated successfully!',
-            playerStates: gameState.players
-        });
+    if (uid) {
+        // Check if the UID exists in the players array
+        const exists = gameState.players.some(player => player.uid === uid);
+        res.send(exists); // Send `true` or `false` directly
     } else {
-        res.status(400).send({ error: 'Invalid data provided! Ensure all fields are included.' });
+        res.status(400).send(false); // Send `false` if UID is not provided
     }
-});
-
-// Route for GET requests to retrieve the state of all players
-app.get('/', (req, res) => {
-    res.send(gameState);
 });
 
 const port = process.env.PORT || 3000;
