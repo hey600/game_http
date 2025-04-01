@@ -15,6 +15,7 @@ app.post('/', (req, res) => {
     const { uid } = req.body;
 
     if (uid) {
+        rs.send("got here");
         // Convert uid to a number before checking
         const uidNum = Number(uid);
         const exists = gameState.players.includes(uidNum);
