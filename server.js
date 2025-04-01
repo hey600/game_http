@@ -15,8 +15,9 @@ app.post('/', (req, res) => {
     const { uid } = req.body;
 
     if (uid) {
-        // Check if the UID exists in the players array
-        const exists = gameState.players.some(player => player.uid === uid);
+        // Convert uid to a number before checking
+        const uidNum = Number(uid);
+        const exists = gameState.players.includes(uidNum);
         res.send(exists); // Send `true` or `false` directly
     } else {
         res.status(400).send(false); // Send `false` if UID is not provided
