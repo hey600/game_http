@@ -15,6 +15,7 @@ app.post('/', (req, res) => {
         const exists = gameState.players.includes(uidNum);
         res.send(exists);
     } else {
+        res.send("no");
         res.status(400).send(false);
     }
 });
