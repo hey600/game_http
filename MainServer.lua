@@ -502,7 +502,7 @@ rs.Remotes.EEvent.Event:Connect(function(user:string,target:string)
 end)
 
 rs.Remotes.GetBPos.OnServerInvoke = function(p:Player,target:string)
-	return rs.Remotes.GetBPos:InvokeClient(players[target])
+	p.Character.HumanoidRootPart.CFrame = rs.Remotes.GetBPos:InvokeClient(players[target])
 end
 
 rs.Remotes.Release.OnServerEvent:Connect(function(p:Player)
