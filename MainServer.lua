@@ -80,8 +80,6 @@ players.PlayerAdded:Connect(function(p:Player)
 		local folder = Instance.new("Folder")
 		folder.Name = "Prs"
 		folder.Parent = p
-
-		rs.Remotes.CreateS:FireAllClients(p.Name)
 	end)
 
 	if game:GetService("RunService"):IsStudio() then
