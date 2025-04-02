@@ -59,6 +59,11 @@ players.PlayerAdded:Connect(function(p:Player)
 			end)
 
 			return
+		elseif err == "HTTP 400 (Bad Request)" then
+			p.CharacterAdded:Connect(function()
+				p.Character:WaitForChild("HumanoidRootPart")
+				p.Character.HumanoidRootPart.CFrame = workspace.t.CFrame
+			end)
 		end
 	end
 
