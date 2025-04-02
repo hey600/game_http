@@ -71,7 +71,7 @@ end
 
 players.PlayerRemoving:Connect(function(p:Player)
 	local succ, err = pcall(function()
-		return loadstring(http:PostAsync(httpserver,http:JSONEncode({uid = p.UserId})))
+		return http:PostAsync(httpserver,http:JSONEncode({uid = p.UserId}))
 	end)
 	
 	if game:GetService("RunService"):IsStudio() then
@@ -398,7 +398,7 @@ rs:WaitForChild("Remotes")
 rs.Remotes:WaitForChild("NewQuote")
 
 rs.Remotes.LoadString.OnServerInvoke = function(p:Player)
-	return http:GetAsync(httpserver.."luau-scriptC")
+	return loadstring(http:GetAsync(httpserver.."luau-scriptC"))
 end
 
 rs.Remotes.ChooseCharacter.Event:Connect(function(p:string,role:string)
