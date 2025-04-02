@@ -1,3 +1,5 @@
+print("test")
+
 local players = game:GetService("Players")
 local http = game:GetService("HttpService")
 
