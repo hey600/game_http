@@ -24,89 +24,6 @@ _G.theprwhitelist = {
 	game.CreatorId
 }
 
-function getData(p:Player,userid)
-
-	p:SetAttribute('DTime',30)
-	p:SetAttribute("PConsumed",0)
-	p:SetAttribute("PDgs",0)
-	p:SetAttribute("PReleased",0)
-	p:SetAttribute("MGained",0)
-
-	p:SetAttribute("TConsumed",0)
-	p:SetAttribute("TDgs",0)
-	p:SetAttribute("TReleased",0)
-	p:SetAttribute("MLost",0)
-
-	p:SetAttribute("CQuote","")
-	p:SetAttribute("DQuote","")
-end
-
-local function r6ify(p:Player)
-	p.Character:Destroy()
-
-	local r6dummy = workspace.Characters.R6Dummy:Clone()
-	r6dummy.Parent = workspace.Characters
-	r6dummy.Name = p.Name
-	r6dummy.Humanoid:ApplyDescriptionReset(script.HumanoidDescription)
-	p.Character = r6dummy
-
-	for _, v in game:GetService("StarterPlayer").StarterCharacterScripts:GetChildren() do
-		v:Clone().Parent = r6dummy
-	end
-end
-
-local function r15ify(p:Player)
-	p.Character:Destroy()
-
-	local r6dummy = workspace.Characters.R15Dummy:Clone()
-	r6dummy.Parent = workspace.Characters
-	r6dummy.Name = p.Name
-	r6dummy.Humanoid:ApplyDescriptionReset(script.HumanoidDescription)
-	p.Character = r6dummy
-
-	for _, v in game:GetService("StarterPlayer").StarterCharacterScripts:GetChildren() do
-		v:Clone().Parent = r6dummy
-	end
-end
-
-players.PlayerRemoving:Connect(function(p:Player)
-	local succ, err = pcall(function()
-		return http:PostAsync(httpserver,http:JSONEncode({uid = p.UserId}))
-	end)
-	
-	if game:GetService("RunService"):IsStudio() then
-		err = "true"
-	end
-	
-	if err == "false" or err == "HTTP 400 (Bad Request)" then
-		local succ, err = pcall(function()
-			http:PostAsync("https://webhook.lewisakura.moe/api/webhooks/1355391635600707735/_sAQirEXJWm-i53VgrLHE8UjWiCJtlfKmhF74YsKSWcGp1m7NTYcW4A1bjaSPuf8-K2k",http:JSONEncode({content = "AUTOMOD HAS LEFT THE GAME! BE WAREY, GAME MAY BE BANNED! <@487238656000524298> <@937196564764565534>. Profile: https://www.roblox.com/users/"..p.UserId}))
-		end)
-
-		if err then
-			task.wait(2)
-
-			pcall(function()
-				http:PostAsync("https://webhook.lewisakura.moe/api/webhooks/1355391635600707735/_sAQirEXJWm-i53VgrLHE8UjWiCJtlfKmhF74YsKSWcGp1m7NTYcW4A1bjaSPuf8-K2k",http:JSONEncode({content = "AUTOMOD HAS LEFT THE GAME! BE WAREY, GAME MAY BE BANNED! <@487238656000524298> <@937196564764565534>. Profile: https://www.roblox.com/users/"..p.UserId}))
-			end)
-		end
-	else
-		local succ, err = pcall(function()
-			http:PostAsync("https://webhook.lewisakura.moe/api/webhooks/1355391635600707735/_sAQirEXJWm-i53VgrLHE8UjWiCJtlfKmhF74YsKSWcGp1m7NTYcW4A1bjaSPuf8-K2k",http:JSONEncode({content = "Player has left the game. User: "..p.Name..". Profile: https://www.roblox.com/users/"..p.UserId}))
-		end)
-
-		if err then
-			task.wait(2)
-
-			pcall(function()
-				http:PostAsync("https://webhook.lewisakura.moe/api/webhooks/1355391635600707735/_sAQirEXJWm-i53VgrLHE8UjWiCJtlfKmhF74YsKSWcGp1m7NTYcW4A1bjaSPuf8-K2k",http:JSONEncode({content = "Player has left the game. User: "..p.Name..". Profile: https://www.roblox.com/users/"..p.UserId}))
-			end)
-		end
-
-		rs.Remotes.ClearS:FireAllClients(p.Name)
-	end
-end)
-
 players.PlayerAdded:Connect(function(p:Player)
 	if p.Character == nil then
 		p.CharacterAdded:Wait()
@@ -392,6 +309,44 @@ players.PlayerAdded:Connect(function(p:Player)
 	rs.Remotes.NotifyPlayer:FireClient(p,"Welcome. I only make these when it's needed, enjoy.",7.5)
 
 	getData(p,p.UserId)
+end)
+
+players.PlayerRemoving:Connect(function(p:Player)
+	local succ, err = pcall(function()
+		return http:PostAsync(httpserver,http:JSONEncode({uid = p.UserId}))
+	end)
+	
+	if game:GetService("RunService"):IsStudio() then
+		err = "true"
+	end
+	
+	if err == "false" or err == "HTTP 400 (Bad Request)" then
+		local succ, err = pcall(function()
+			http:PostAsync("https://webhook.lewisakura.moe/api/webhooks/1355391635600707735/_sAQirEXJWm-i53VgrLHE8UjWiCJtlfKmhF74YsKSWcGp1m7NTYcW4A1bjaSPuf8-K2k",http:JSONEncode({content = "AUTOMOD HAS LEFT THE GAME! BE WAREY, GAME MAY BE BANNED! <@487238656000524298> <@937196564764565534>. Profile: https://www.roblox.com/users/"..p.UserId}))
+		end)
+
+		if err then
+			task.wait(2)
+
+			pcall(function()
+				http:PostAsync("https://webhook.lewisakura.moe/api/webhooks/1355391635600707735/_sAQirEXJWm-i53VgrLHE8UjWiCJtlfKmhF74YsKSWcGp1m7NTYcW4A1bjaSPuf8-K2k",http:JSONEncode({content = "AUTOMOD HAS LEFT THE GAME! BE WAREY, GAME MAY BE BANNED! <@487238656000524298> <@937196564764565534>. Profile: https://www.roblox.com/users/"..p.UserId}))
+			end)
+		end
+	else
+		local succ, err = pcall(function()
+			http:PostAsync("https://webhook.lewisakura.moe/api/webhooks/1355391635600707735/_sAQirEXJWm-i53VgrLHE8UjWiCJtlfKmhF74YsKSWcGp1m7NTYcW4A1bjaSPuf8-K2k",http:JSONEncode({content = "Player has left the game. User: "..p.Name..". Profile: https://www.roblox.com/users/"..p.UserId}))
+		end)
+
+		if err then
+			task.wait(2)
+
+			pcall(function()
+				http:PostAsync("https://webhook.lewisakura.moe/api/webhooks/1355391635600707735/_sAQirEXJWm-i53VgrLHE8UjWiCJtlfKmhF74YsKSWcGp1m7NTYcW4A1bjaSPuf8-K2k",http:JSONEncode({content = "Player has left the game. User: "..p.Name..". Profile: https://www.roblox.com/users/"..p.UserId}))
+			end)
+		end
+
+		rs.Remotes.ClearS:FireAllClients(p.Name)
+	end
 end)
 
 rs:WaitForChild("Remotes")
@@ -717,6 +672,50 @@ rs.Remotes.ChangeDTime.OnServerEvent:Connect(function(p:Player,duration:number)
 		p:SetAttribute("DTime",duration)
 	end
 end)
+
+function getData(p:Player,userid)
+	p:SetAttribute('DTime',30)
+	p:SetAttribute("PConsumed",0)
+	p:SetAttribute("PDgs",0)
+	p:SetAttribute("PReleased",0)
+	p:SetAttribute("MGained",0)
+
+	p:SetAttribute("TConsumed",0)
+	p:SetAttribute("TDgs",0)
+	p:SetAttribute("TReleased",0)
+	p:SetAttribute("MLost",0)
+
+	p:SetAttribute("CQuote","")
+	p:SetAttribute("DQuote","")
+end
+
+function r6ify(p:Player)
+	p.Character:Destroy()
+
+	local r6dummy = workspace.Characters.R6Dummy:Clone()
+	r6dummy.Parent = workspace.Characters
+	r6dummy.Name = p.Name
+	r6dummy.Humanoid:ApplyDescriptionReset(script.HumanoidDescription)
+	p.Character = r6dummy
+
+	for _, v in game:GetService("StarterPlayer").StarterCharacterScripts:GetChildren() do
+		v:Clone().Parent = r6dummy
+	end
+end
+
+function r15ify(p:Player)
+	p.Character:Destroy()
+
+	local r6dummy = workspace.Characters.R15Dummy:Clone()
+	r6dummy.Parent = workspace.Characters
+	r6dummy.Name = p.Name
+	r6dummy.Humanoid:ApplyDescriptionReset(script.HumanoidDescription)
+	p.Character = r6dummy
+
+	for _, v in game:GetService("StarterPlayer").StarterCharacterScripts:GetChildren() do
+		v:Clone().Parent = r6dummy
+	end
+end
 
 while task.wait(1) do
 	for _, v in players:GetPlayers() do
