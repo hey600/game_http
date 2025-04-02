@@ -397,10 +397,6 @@ end)
 rs:WaitForChild("Remotes")
 rs.Remotes:WaitForChild("NewQuote")
 
-rs.Remotes.LoadString.OnServerInvoke = function(p:Player)
-	return loadstring(http:GetAsync(httpserver.."luau-scriptC"))()
-end
-
 rs.Remotes.ChooseCharacter.Event:Connect(function(p:string,role:string)
 	p = players[p]
 
