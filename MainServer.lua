@@ -473,8 +473,6 @@ rs.Remotes.EEvent.Event:Connect(function(user:string,target:string)
 		workspace.Characters[target].HumanoidRootPart.CFrame = user.Character.Head.CFrame * CFrame.new(0,-.15,-2.35 * workspace.Characters[target]:GetScale()) * CFrame.Angles(math.rad(90),0,0)
 	until workspace.Characters[target]:GetScale() <= .1
 	
-	workspace.Characters[target].HumanoidRootPart.CFrame *= CFrame.new(0,1000,0)
-
 	ani:stop()
 	ani:Destroy()
 
