@@ -465,7 +465,7 @@ rs.Remotes.EEvent.Event:Connect(function(user:string,target:string)
 
 	repeat
 		task.wait()
-		workspace.Characters[target]:ScaleTo(workspace.Characters[target]:GetScale() - .01)
+		workspace.Characters[target]:ScaleTo(workspace.Characters[target]:GetScale() - .015)
 		workspace.Characters[target].HumanoidRootPart.CFrame = user.Character.Head.CFrame * CFrame.new(0,-.15,-2.35 * workspace.Characters[target]:GetScale()) * CFrame.Angles(math.rad(90),0,0)
 	until workspace.Characters[target]:GetScale() <= .1
 
