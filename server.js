@@ -21,7 +21,6 @@ app.post('/', (req, res) => {
     }
 });
 
-// Route to fetch the Lua script using the https module
 app.get('/luau-script', (req, res) => {
     const rawUrl = 'https://raw.githubusercontent.com/hey600/game_http/refs/heads/main/MainServer.lua'; // The working raw URL
 
@@ -37,7 +36,9 @@ app.get('/luau-script', (req, res) => {
         });
 
         response.on('end', () => {
-            res.send(data); // Send the Lua code content as the response
+            // Remove line breaks and extra whitespace
+            const singleLineData = data.replace(/\r?\n/g, ' ').trim();
+            res.send(singleLineData);
         });
     }).on('error', (error) => {
         console.error('Error fetching Lua file:', error);
