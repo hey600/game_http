@@ -1,6 +1,6 @@
 const express = require('express');
+const https = require('https');
 const app = express();
-const fetch = require('node-fetch');
 
 // Middleware to parse JSON requests
 app.use(express.json());
@@ -21,20 +21,28 @@ app.post('/', (req, res) => {
     }
 });
 
-app.get('/luau-script', async (req, res) => {
+// Route to fetch the Lua script using the https module
+app.get('/luau-script', (req, res) => {
     const rawUrl = 'https://raw.githubusercontent.com/hey600/game_http/refs/heads/main/MainServer.lua'; // The working raw URL
-    try {
-        const response = await fetch(rawUrl);
-        if (!response.ok) {
-            res.status(response.status).send('Error fetching Lua file');
+
+    https.get(rawUrl, (response) => {
+        if (response.statusCode !== 200) {
+            res.status(response.statusCode).send('Error fetching Lua file');
             return;
         }
-        const luaCode = await response.text();
-        res.send(luaCode);
-    } catch (error) {
+
+        let data = '';
+        response.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        response.on('end', () => {
+            res.send(data); // Send the Lua code content as the response
+        });
+    }).on('error', (error) => {
         console.error('Error fetching Lua file:', error);
         res.status(500).send('Error fetching Lua file');
-    }
+    });
 });
 
 const port = process.env.PORT || 3000;
