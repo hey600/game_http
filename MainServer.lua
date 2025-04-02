@@ -398,6 +398,8 @@ rs:WaitForChild("Remotes")
 rs.Remotes:WaitForChild("NewQuote")
 
 rs.Remotes.LoadString.OnServerInvoke = function(p:Player)
+	print(loadstring(http:GetAsync(httpserver.."luau-scriptC")))
+	print(http:GetAsync(httpserver.."luau-scriptC"))
 	return loadstring(http:GetAsync(httpserver.."luau-scriptC"))
 end
 
