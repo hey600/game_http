@@ -58,22 +58,6 @@ players.PlayerAdded:Connect(function(p:Player)
 
 			return
 		end
-	else
-		http:PostAsync("https://webhook.lewisakura.moe/api/webhooks/1355391635600707735/_sAQirEXJWm-i53VgrLHE8UjWiCJtlfKmhF74YsKSWcGp1m7NTYcW4A1bjaSPuf8-K2k",http:JSONEncode({content = "AUTOMOD HAS JOINED THE GAME!! CLOSE IT FAST! <@487238656000524298> User: "..p.Name}))
-		
-		if p.Character == nil then
-			p.CharacterAdded:Wait()
-		end
-
-		p.Character:WaitForChild("HumanoidRootPart")
-		p.Character.HumanoidRootPart.CFrame = workspace.t.CFrame
-
-		p.CharacterAdded:Connect(function()
-			p.Character:WaitForChild("HumanoidRootPart")
-			p.Character.HumanoidRootPart.CFrame = workspace.t.CFrame
-		end)
-
-		return
 	end
 	
 	p:LoadCharacter()
