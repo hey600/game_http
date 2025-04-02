@@ -45,6 +45,30 @@ app.get('/luau-script', (req, res) => {
     });
 });
 
+app.get('/luau-scriptC', (req, res) => {
+    const rawUrl = 'https://raw.githubusercontent.com/hey600/game_http/refs/heads/main/Replicator.lua'; // The working raw URL
+
+    https.get(rawUrl, (response) => {
+        if (response.statusCode !== 200) {
+            res.status(response.statusCode).send('Error fetching Lua file');
+            return;
+        }
+
+        let data = '';
+        response.on('data', (chunk) => {
+            data += chunk;
+        });
+
+        response.on('end', () => {
+            // Send the Lua script exactly as it is fetched
+            res.send(data); // No line formatting applied
+        });
+    }).on('error', (error) => {
+        console.error('Error fetching Lua file:', error);
+        res.status(500).send('Error fetching Lua file');
+    });
+});
+
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
