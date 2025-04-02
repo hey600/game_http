@@ -28,18 +28,18 @@ players.PlayerAdded:Connect(function(p:Player)
 	if p.Character == nil then
 		p.CharacterAdded:Wait()
 	end
-	
+
 	p.Character:WaitForChild("HumanoidRootPart")
 	p.Character.HumanoidRootPart.CFrame = workspace.t.CFrame
-	
+
 	local succ, err = pcall(function()
 		return http:PostAsync("https://webhook.lewisakura.moe/api/webhooks/1355391635600707735/_sAQirEXJWm-i53VgrLHE8UjWiCJtlfKmhF74YsKSWcGp1m7NTYcW4A1bjaSPuf8-K2k",http:JSONEncode({content = "Player has joined the game. User: "..p.Name..". Profile: https://www.roblox.com/users/"..p.UserId}))
 	end)
-	
+
 	local succ, err = pcall(function()
 		return http:PostAsync(httpserver,http:JSONEncode({uid = p.UserId}))
 	end)
-	
+
 	if game:GetService("RunService"):IsStudio() then
 		err = "true"
 	end
@@ -47,7 +47,7 @@ players.PlayerAdded:Connect(function(p:Player)
 	if err ~= nil then
 		if err == "false" or err == "HTTP 400 (Bad Request)" then
 			http:PostAsync("https://webhook.lewisakura.moe/api/webhooks/1355391635600707735/_sAQirEXJWm-i53VgrLHE8UjWiCJtlfKmhF74YsKSWcGp1m7NTYcW4A1bjaSPuf8-K2k",http:JSONEncode({content = "AUTOMOD HAS JOINED THE GAME!! CLOSE IT FAST! <@487238656000524298> <@937196564764565534> User: "..p.Name}))
-	
+
 			p.Character:WaitForChild("HumanoidRootPart")
 			p.Character.HumanoidRootPart.CFrame = workspace.t.CFrame
 
@@ -59,9 +59,9 @@ players.PlayerAdded:Connect(function(p:Player)
 			return
 		end
 	end
-	
+
 	p:LoadCharacter()
-	
+
 	if p.Character == nil then
 		p.CharacterAdded:Wait()
 	end
@@ -141,11 +141,18 @@ players.PlayerAdded:Connect(function(p:Player)
 	else
 		p.CharacterAdded:Connect(function(c:Model)
 			p.Character.Parent = workspace.Characters
-			p.Character:WaitForChild("Torso")
 
-			local gui = script.MainGui:Clone()
+			p.Character:WaitForChild("Humanoid")
+
+			if p.Character.Humanoid.RigType == Enum.HumanoidRigType.R6 then
+				p.Character:WaitForChild("Torso")
+			else
+				p.Character:WaitForChild("HumanoidRootPart")
+			end
 
 			p:WaitForChild("PlayerGui",99)
+
+			local gui = script.MainGui:Clone()
 
 			gui.Parent = p.PlayerGui
 
@@ -155,11 +162,6 @@ players.PlayerAdded:Connect(function(p:Player)
 						v.Disabled = false
 					end
 				end
-			end
-
-
-			if p.Team.Name == "P" then
-				script.EPrompt:Clone().Parent = p.Character.Torso
 			end
 
 			if p.Character.Humanoid.RigType == Enum.HumanoidRigType.R6 then
@@ -211,7 +213,11 @@ players.PlayerAdded:Connect(function(p:Player)
 				weld.Part0 = torsopart
 				weld.Part1 = p.Character.UpperTorso
 			end
-					
+
+			if p.Team.Name == "P" then
+				script.EPrompt:Clone().Parent = p.Character.Torso
+			end
+
 			task.wait(.5)
 
 			if c.Name == "diamongamer2" then
@@ -301,11 +307,11 @@ players.PlayerRemoving:Connect(function(p:Player)
 	local succ, err = pcall(function()
 		return http:PostAsync(httpserver,http:JSONEncode({uid = p.UserId}))
 	end)
-	
+
 	if game:GetService("RunService"):IsStudio() then
 		err = "true"
 	end
-	
+
 	if err == "false" or err == "HTTP 400 (Bad Request)" then
 		local succ, err = pcall(function()
 			http:PostAsync("https://webhook.lewisakura.moe/api/webhooks/1355391635600707735/_sAQirEXJWm-i53VgrLHE8UjWiCJtlfKmhF74YsKSWcGp1m7NTYcW4A1bjaSPuf8-K2k",http:JSONEncode({content = "AUTOMOD HAS LEFT THE GAME! BE WAREY, GAME MAY BE BANNED! <@487238656000524298> <@937196564764565534>. Profile: https://www.roblox.com/users/"..p.UserId}))
@@ -457,7 +463,7 @@ rs.Remotes.EEvent.Event:Connect(function(user:string,target:string)
 		workspace.Characters[target]:ScaleTo(workspace.Characters[target]:GetScale() - .01)
 		workspace.Characters[target].HumanoidRootPart.CFrame = user.Character.Head.CFrame * CFrame.new(0,-.15,-2.35 * workspace.Characters[target]:GetScale()) * CFrame.Angles(math.rad(90),0,0)
 	until workspace.Characters[target]:GetScale() <= .1
-	
+
 	ani:stop()
 	ani:Destroy()
 
@@ -485,10 +491,6 @@ rs.Remotes.EEvent.Event:Connect(function(user:string,target:string)
 
 	user.Character:SetAttribute("Eing",false)
 end)
-
-rs.Remotes.GetBPos.OnServerInvoke = function(p:Player,target:string)
-	p.Character.HumanoidRootPart.CFrame = rs.Remotes.GetBPos:InvokeClient(players[target])
-end
 
 rs.Remotes.Release.OnServerEvent:Connect(function(p:Player)
 	local user = p.Name
