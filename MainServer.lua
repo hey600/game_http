@@ -157,6 +157,7 @@ players.PlayerAdded:Connect(function(p:Player)
 	else
 		p.CharacterAdded:Connect(function(c:Model)
 			p.Character.Parent = workspace.Characters
+			p.Character:WaitForChild("Torso")
 
 			if p.Team.Name == "P" then
 				script.EPrompt:Clone().Parent = p.Character.Torso
