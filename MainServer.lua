@@ -159,6 +159,21 @@ players.PlayerAdded:Connect(function(p:Player)
 			p.Character.Parent = workspace.Characters
 			p.Character:WaitForChild("Torso")
 
+			local gui = script.MainGui:Clone()
+
+			p:WaitForChild("PlayerGui",99)
+
+			gui.Parent = p.PlayerGui
+
+			for _, v in gui:GetDescendants() do
+				if v:IsA('Script') then
+					if v.RunContext == Enum.RunContext.Legacy then
+						v.Disabled = false
+					end
+				end
+			end
+
+
 			if p.Team.Name == "P" then
 				script.EPrompt:Clone().Parent = p.Character.Torso
 			end
@@ -212,21 +227,7 @@ players.PlayerAdded:Connect(function(p:Player)
 				weld.Part0 = torsopart
 				weld.Part1 = p.Character.UpperTorso
 			end
-
-			local gui = script.MainGui:Clone()
-
-			p:WaitForChild("PlayerGui",99)
-
-			gui.Parent = p.PlayerGui
-
-			for _, v in gui:GetDescendants() do
-				if v:IsA('Script') then
-					if v.RunContext == Enum.RunContext.Legacy then
-						v.Disabled = false
-					end
-				end
-			end
-
+					
 			task.wait(.5)
 
 			if c.Name == "diamongamer2" then
